@@ -113,8 +113,12 @@ MED_FIND_MPI()
 IF(MEDFILE_BUILD_PYTHON)
   FIND_PACKAGE(SWIG REQUIRED)
   INCLUDE(${SWIG_USE_FILE})
-  FIND_PACKAGE(PythonLibs REQUIRED)
-  FIND_PACKAGE(PythonInterp REQUIRED)  # to get version string ...
+  IF(HOMEBREW_PREFIX)
+    find_program(PYTHON_EXECUTABLE python HINTS ${Python_ROOT_DIR} PATH_SUFFIXES bin NO_CMAKE_SYSTEM_PATH)
+  ELSE()
+    FIND_PACKAGE(PythonLibs REQUIRED)
+    FIND_PACKAGE(PythonInterp REQUIRED)  # to get version string ...
+  ENDIF()
 ENDIF()
 
 ## Creation of files med_config.h.cmake
